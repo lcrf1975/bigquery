@@ -1,0 +1,13 @@
+SELECT
+  name,
+  databaseLocation,
+  databaseSizeGB,
+  lastGPSDateTime,
+  mapProvider,
+  ServerName
+FROM
+  `geotab-supportdata.MyGeotab.DatabaseInfo`
+WHERE
+  lower (Name) like '%fh123%'
+LIMIT
+  1000
