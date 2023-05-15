@@ -1,0 +1,15 @@
+SELECT
+  DateTime,
+  RemoteIp,
+  Browser,
+  CallName,
+  CallDetails
+FROM
+  `geotab-myserver.MyGeotab.ApiUsage_20230508`
+WHERE
+  UserName = "leandro.amorim@solera.com"
+  AND CallName = "Authenticate"
+ORDER BY
+  DateTime DESC
+LIMIT
+  1000

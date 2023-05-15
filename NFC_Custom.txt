@@ -1,0 +1,15 @@
+SELECT DISTINCT
+  DS.SerialNo As Serial_Numeber,
+  DP.CustomParam_fNfcUseCardSn as NFC
+FROM
+  `geotab-embedded.DatasetParameter.DeviceParametersFull_*` DP
+INNER JOIN
+  `geotab-embedded.Summary.DeviceCurrentStatus_*` DS
+ON
+  DP._TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+  AND DS._TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+  AND DP.HardwareId = DS.HardwareId
+WHERE
+  LOWER(DS.DatabaseName) LIKE '%mercadolivre%'
+ORDER BY
+  DS.SerialNo

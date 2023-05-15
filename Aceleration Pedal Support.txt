@@ -1,0 +1,33 @@
+SELECT
+  *
+FROM
+  `geotab-embedded.DatasetEngineStatus.EngineStatusSupport`
+WHERE
+  LOWER (Make) LIKE '%scania%'
+  AND LOWER (Model) LIKE '%g-series%'
+  AND CAST (Year AS INT64) >= 2019
+  AND LOWER (Description) LIKE '%pedal%'
+  AND PercentageSupported > 0
+ORDER BY
+  PercentageSupported DESC
+  
+  SELECT
+  Make, Model, Year, Description, PercentageSupported, SampleCount
+FROM
+  `geotab-embedded.DatasetEngineStatus.EngineStatusSupport`
+WHERE
+  LOWER (Make) LIKE '%volks%'
+  AND Code = 2776
+  AND PercentageSupported > 0
+ORDER BY
+  PercentageSupported DESC
+  
+SELECT
+  Make, Model, Year, Description, PercentageSupported, SampleCount
+FROM
+  `geotab-embedded.DatasetEngineStatus.EngineStatusSupport`
+WHERE
+  Code = 2776 -- Accelerator pedal position
+  AND PercentageSupported > 99
+ORDER BY
+  Make, Model

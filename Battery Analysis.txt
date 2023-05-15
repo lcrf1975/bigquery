@@ -1,0 +1,19 @@
+SELECT
+  DS.SerialNo SN,
+  CAST (MIN(DD.Value) AS STRING FORMAT '99.99') MIN_V,
+  CAST (MAX(DD.Value) AS STRING FORMAT '99.99') MAX_V,
+  CAST (AVG(DD.Value) AS STRING FORMAT '99.99') AVG_V
+FROM
+  `geotab-embedded.AllDeviceData.Voltage_2023*` DD
+INNER JOIN
+  `geotab-embedded.Summary.DeviceCurrentStatus` DS
+ON
+  DD.HardwareId = DS.HardwareId
+WHERE
+  DS.DatabaseName = 'pepsico_brasil'
+  AND DD.Value < 9
+  AND DD.DateTime > '2023-02-01'
+GROUP BY
+  DS.SerialNo
+ORDER BY
+  1
