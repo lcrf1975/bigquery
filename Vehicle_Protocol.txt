@@ -1,0 +1,18 @@
+SELECT DISTINCT
+  CA.SerialNo AS Numero_Serial,
+  CA.State AS Estado,
+  CA.City AS Cidade,
+  DD.EngineProtocol AS Protocolo,
+  CA.LastConnect AS Ultima_Conexao
+FROM
+  `geotab-embedded.Summary.CurrentActiveDevices` CA
+LEFT JOIN
+  `geotab-embedded.AllDeviceData.EngineStatus_*` DD
+ON
+  CA.HardwareId = DD.HardwareId
+WHERE
+  DD._TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+  AND LOWER (CA.DatabaseName) = "pepsico_brasil"
+  AND LOWER (CA.Termination) = "no"
+ORDER BY
+  CA.State, CA.City

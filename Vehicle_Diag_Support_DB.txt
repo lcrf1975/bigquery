@@ -1,0 +1,32 @@
+SELECT
+  DCS.Make,
+  DCS.Model,
+  DCS.Year,
+  SDD.Description,
+  Count (ES.HardwareID) AS Engine_Status_Counts
+FROM
+  `geotab-embedded.AllDeviceData.EngineStatus_*` AS ES
+INNER JOIN
+  `geotab-embedded.Summary.DeviceCurrentStatus` AS DCS
+ON
+  ES.HardwareID = DCS.HardwareID
+INNER JOIN
+  geotab-embedded.DatasetEngineStatus.StatusDataDescription SDD
+ON
+  ES.Code = SDD.Code
+WHERE
+  LOWER(DCS.DatabaseName) LIKE 'mercadolivre'
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY))
+  AND DCS.Make IS NOT NULL
+  AND DCS.Model IS NOT NULL
+  AND DCS.Year IS NOT NULL
+GROUP BY
+  1,
+  2,
+  3,
+  4
+ORDER BY
+  1,
+  2,
+  3,
+  4

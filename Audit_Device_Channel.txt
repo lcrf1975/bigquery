@@ -1,0 +1,51 @@
+SELECT
+  SerialNo,
+  UserName,
+  AuditDateTime,
+  Details
+FROM
+  `geotab-myadmin.General.Audit_*`
+WHERE
+  NOT UserName = ''
+  AND LOWER (Details) LIKE '%device channel updated to channel:%'
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+  AND SerialNo IN
+   ('G9K1HXKEFNC0',
+    'G9K70HDT0XM9',
+    'G91JMFVCREXY',
+    'G9DWV4XNV8YU',
+    'G9WZ56BS0H3N',
+    'G9SW2UF6N196',
+    'G9ANZF070XS6',
+    'G9V7USHW7520',
+    'G9PWFTTDYY6S',
+    'G9Y7B1RCF135',
+    'G9PNEC10BW7M',
+    'G93AMPSCNB4N',
+    'G9KY86V4YSE7',
+    'G9NND9F53JAY',
+    'G9FBNR6B79US',
+    'G9DFKW2M70WB',
+    'G9X4NW4S71R9',
+    'G96TN4RK48D7',
+    'G9743VKEA7DH',
+    'G9R676EB2E77',
+    'G93SRR35NPFY',
+    'G9EXYU5V6HJM',
+    'G9S533JP7UPC',
+    'G9SMXE64NF57',
+    'G9TY8THY697X',
+    'G9TN40ZPWMA5',
+    'G96583WHF20Z',
+    'G9C9ED57KCXW',
+    'G9D3J7BB55XM',
+    'G9Y52R7BS1ZM',
+    'G9WR7S30P39B',
+    'G9M9494119U7',
+    'G9F62RMBD2BP',
+    'G90RDJ8P9N2H',
+    'G96XT9PE7HNZ',
+    'G99J730K4B14')
+ORDER BY
+  SerialNo ASC,
+  AuditDateTime ASC

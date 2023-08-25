@@ -1,0 +1,13 @@
+SELECT
+  COUNT (ES.Value) AS Samples,
+  FORMAT('%s%%', CAST(ROUND((AVG(CASE WHEN ES.Value = -1 THEN 100.0 ELSE 0 END)), 2) AS STRING)) AS SeatBelt_Error_Percentage
+FROM
+  `geotab-embedded.AllDeviceData.EngineStatus_*` AS ES
+INNER JOIN
+  `geotab-embedded.Summary.DeviceCurrentStatus` AS DS
+ON
+  ES.HardwareID = DS.HardwareID
+WHERE
+  LOWER(DS.DatabaseName) LIKE 'mercadolivre'
+  AND ES.Code = 2
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY))

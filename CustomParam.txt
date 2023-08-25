@@ -1,0 +1,23 @@
+SELECT
+  DP.HardwareId,
+  DS.SerialNo,
+  DS.ResellerAccount,
+  DS.ProductCode,
+  DS.PlanDescription,
+  DS.LastConnect,
+  DP.CustomParam_fEnableActiveTracking
+FROM
+  geotab-embedded.DatasetParameter.DeviceParametersFull DP
+INNER JOIN
+  geotab-embedded.Summary.DeviceCurrentStatus DS
+ON
+  DP.HardwareId = DS.HardwareId
+WHERE
+  LOWER(DS.DatabaseName) LIKE 'mercadolivre%'
+  AND DS.FirstConnect IS NOT NULL
+  AND DS.LastConnect IS NOT NULL
+  AND LOWER(DS.PlanDescription) NOT LIKE 'terminate%'
+  AND lower(DS.Termination) like 'no%'
+  AND DP.CustomParam_fEnableActiveTracking = FALSE
+ORDER BY
+  DS.LastConnect DESC
